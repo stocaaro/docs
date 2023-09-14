@@ -85,7 +85,10 @@ This places each item's data inside a special `__data` key.
 
 To list current user's objects:
 
+
 ```typescript
+import { list } from 'aws-amplify/storage';
+
 try {
   const response = list({ prefix: 'photos/', options:  {
     level: 'protected',
@@ -99,6 +102,8 @@ try {
 To get other users' objects:
 
 ```typescript
+import { list } from 'aws-amplify/storage';
+
 try {
   const response = list({ prefix: 'photos/', options:  {
     level: 'protected',
@@ -113,6 +118,8 @@ try {
 ## Private level list
 
 ```typescript
+import { list } from 'aws-amplify/storage';
+
 try {
   const response = list({ prefix: 'photos/', options:  {
     level: 'private',
@@ -128,6 +135,8 @@ try {
 To get a list of all files in your S3 bucket under a specific prefix, you can set `listAll` to `true`.
 
 ```typescript
+import { list } from 'aws-amplify/storage';
+
 try {
   const response = await list({ path: "", options : {
         listAll: true
@@ -142,21 +151,23 @@ try {
 If the pageSize is set lower than the total file size, a single `list` call only returns a subset of all the files. To list all the files with multiple calls, users can use the `nextToken` flag:
 
 ```typescript
+import { list } from 'aws-amplify/storage';
+
 const PAGE_SIZE = 20;
 let nextToken = undefined;
 //...
 const loadNextPage = async () => {
-    let response = await Storage.list({ options:  {
-      pageSize: PAGE_SIZE,
-      nextToken: nextToken
-    }});
-    if (response.nextToken) {
-      nextToken = response.nextToken;
-    } else {
-      nextToken = undefined;
-    }
-    // render list items from response.items
+  let response = await list({ options:  {
+    pageSize: PAGE_SIZE,
+    nextToken: nextToken
+  }});
+  if (response.nextToken) {
+    nextToken = response.nextToken;
+  } else {
+    nextToken = undefined;
   }
+  // render list items from response.items
+}
 ```
 
 <Callout>Note: The range of pageSize can be from 0 - 1000 or 'ALL'.</Callout>
