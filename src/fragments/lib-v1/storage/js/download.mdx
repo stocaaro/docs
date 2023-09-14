@@ -64,6 +64,8 @@ Download a file to in-memory buffer.
 ```typescript
   // Download a file from s3 bucket
   const { body, eTag } = await downloadData({ key, data: file, options: {
+  accessLevel: 'private' | 'protected' | 'guest' , // defaults to `guest` 
+  targetIdentityId?: string, // id of another user, if `level: protected`
   onProgress, // Optional progress callback.
   } }).result;
  ```

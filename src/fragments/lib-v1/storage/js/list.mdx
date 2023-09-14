@@ -85,10 +85,15 @@ This places each item's data inside a special `__data` key.
 
 To list current user's objects:
 
-```javascript
-Storage.list('photos/', { level: 'protected' })
-  .then(({ results }) => console.log(results))
-  .catch((err) => console.log(err));
+```typescript
+try {
+  const response = list({ prefix: 'photos/', options:  {
+    level: 'protected',
+  }});
+  console.log('Listed Items:', response.items);
+} catch(error) {
+  console.log('Error ': error);
+}
 ```
 
 To get other users' objects:
